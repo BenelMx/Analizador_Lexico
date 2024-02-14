@@ -3,10 +3,8 @@ from tkinter import messagebox
 import re
 
 def lexical_analyzer(input_string):
-    # Definimos las palabras reservadas
-    palabras_reservadas = set(['Area'])
-
-    # Definimos los patrones para identificar tokens
+    palabras_reservadas = set(['Area','base','altura'])
+    
     patterns = {
         'PALABRA R': '|'.join(palabras_reservadas),
         'IDENTIFICADOR': r'[a-zA-Z_][a-zA-Z0-9_]*',
@@ -17,13 +15,11 @@ def lexical_analyzer(input_string):
 
     token_types = {key: set() for key in patterns.keys()}
 
-    # Buscamos tokens en el input_string
     for key, pattern in patterns.items():
         matches = re.findall(pattern, input_string)
         for match in matches:
             token_types[key].add(match)
 
-    # Extraemos tokens no clasificados como palabras reservadas
     palabras_reservadas_encontradas = token_types['PALABRA R']
     for key, pattern in patterns.items():
         if key != 'PALABRA R':
@@ -54,24 +50,24 @@ def analyze_input():
     result_text.delete(1.0, tk.END)
     result_text.insert(tk.END, display_table(token_types))
 
-# Crear ventana
 root = tk.Tk()
 root.title("Analizador Léxico")
 
-# Crear widgets
-input_label = tk.Label(root, text="Ingrese la cadena a analizar:")
+root.configure(background='#ADD8E6')
+
+input_label = tk.Label(root, text="Ingrese la cadena a analizar:", bg="light blue")
 input_label.pack()
 
 input_entry = tk.Entry(root, width=50)
 input_entry.pack()
 
-analyze_button = tk.Button(root, text="Analizar", command=analyze_input)
+analyze_button = tk.Button(root, text="Analizar", command=analyze_input, bg="light blue")
 analyze_button.pack()
 
-result_label = tk.Label(root, text="Resultados:")
+result_label = tk.Label(root, text="Resultados:", bg="light blue")
 result_label.pack()
 
-result_text = tk.Text(root, height=10, width=70)
+result_text = tk.Text(root, height=20, width=100)
 result_text.pack()
 
 # Ejecutar la interfaz
